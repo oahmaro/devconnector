@@ -18,8 +18,6 @@ class Login extends Component {
     }
   }
 
-  static getDerivedStateFromProps() {}
-
   onSubmit = e => {
     e.preventDefault()
 
