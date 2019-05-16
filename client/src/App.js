@@ -12,10 +12,12 @@ import jwt_decode from 'jwt-decode'
 import setAuthToken from './utils/setAuthToken'
 import { setCurrentUser } from './actions/authActions'
 import { connect } from 'react-redux'
+import { logoutUser } from './actions/authActions'
 
 class App extends React.Component {
   componentDidMount() {
     // Check for token
+
     if (localStorage.jwtToken) {
       // Set auth token header auth
       setAuthToken(localStorage.jwtToken)
@@ -23,6 +25,17 @@ class App extends React.Component {
       const decoded = jwt_decode(localStorage.jwtToken)
       // Set user and isAuthenticated
       this.props.dispatch(setCurrentUser(decoded))
+
+      // Chech for expired token
+      const currentTime = Date.now / 1000
+      if (decoded.exp < currentTime) {
+        // Logout user
+        this.props.dispatch(logoutUser())
+        // Todo Clear current profile
+
+        // Redirect to login
+        window.location.href = '/login'
+      }
     }
   }
   render() {

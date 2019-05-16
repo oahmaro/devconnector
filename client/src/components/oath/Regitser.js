@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { registerUser } from '../../actions/authActions'
+import { navigate } from '@reach/router'
 
 class Register extends Component {
   state = {
@@ -20,6 +21,12 @@ class Register extends Component {
   //     }))
   //   }
   // }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      navigate('/dashboard')
+    }
+  }
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value })

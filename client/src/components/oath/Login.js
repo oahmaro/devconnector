@@ -12,6 +12,12 @@ class Login extends Component {
     errors: {}
   }
 
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      navigate('/dashboard')
+    }
+  }
+
   static getDerivedStateFromProps() {}
 
   onSubmit = e => {
